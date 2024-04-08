@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Automatic OTP Page</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 40px;
+      height: 40px;
+      margin: 0 5px;
+      text-align: center;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+    }
+
+    .submit-button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Enter the OTP Code</h2>
+    <form action="/verifyOTP" method="post">
+      <input type="text" maxlength="1" name="digit1" />
+      <input type="text" maxlength="1" name="digit2" />
+      <input type="text" maxlength="1" name="digit3" />
+      <input type="text" maxlength="1" name="digit4" />
+      <!-- Add more input fields if needed for longer OTP -->
+      <br>
+      <br>
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    const inputs = document.querySelectorAll('input');
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        if (e.inputType === 'deleteContentBackward' && index > 0) {
+          inputs[index - 1].focus();
+        } else if (index !== inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key >= 0 && e.key <= 9 && index !== inputs.length - 1) {
+          setTimeout(() => inputs[index + 1].focus(), 10);
+        }
+      });
+    });
+
+  </script>
+</body>
+
+</html>
